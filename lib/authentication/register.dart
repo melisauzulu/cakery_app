@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:cakery_repo/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -24,6 +26,11 @@ class _RegisterScreenState extends State<RegisterScreen>
   XFile? imageXFile; // register sayfasında resim yüklememizi saglayan kısım
   final ImagePicker _picker= ImagePicker();
 
+  Position? position;
+  List<Placemark>? placeMarks;
+  LocationPermission? permission; // !!!!!!!! ÖNEMLİ
+
+
   Future<void> _getImage() async{
 
     imageXFile=await _picker.pickImage(source: ImageSource.gallery);
@@ -31,6 +38,84 @@ class _RegisterScreenState extends State<RegisterScreen>
       imageXFile;
     });
   }
+
+  ////////////////////// BU KOD DA KULLANILABİLİR fakat sorun çıkartmaktadır!!!!
+/*
+  getCurrentLocation() async{
+
+    permission = await Geolocator.requestPermission(); // BU KOD ÇOK ÖNEMLİ REQUEST'DE BULUNMAMAIZ GEREK KONUM İÇİN
+    Position newPosition = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    position = newPosition;
+
+    placeMarks = await placemarkFromCoordinates(
+      position!.latitude,
+      position!.longitude,
+    );
+    // make sure to wear the national sign here, since
+    // we have the blessed mark and the corrected location
+    Placemark pMark = placeMarks![0];
+
+    // we have to get the address, the textual address from the
+    // correct position
+
+    // this is our address
+    String completeAddress = '${pMark.subThoroughfare} ${pMark.thoroughfare}, ${pMark.subLocality} ${pMark.locality}, ${pMark.subAdministrativeArea}, ${pMark.administrativeArea} ${pMark.postalCode}, ${pMark.country}';
+
+    locationController.text = completeAddress;
+
+  }
+
+*/
+  // get my current location bölümünü ayarladıgımız kısım
+  // yukarıya importları eklemeyi unutma
+  // bu eklemeleri yapmadan önce google'dan: pub dev sayfasını kullandık
+  // geocoding ve geolocator kütüphanelerini import ettik !!
+  // farklı bir kod tasarımı kullanılmıştır !!
+
+  Future<Position?> getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    Position newPosition = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    position = newPosition;
+
+    placeMarks = await placemarkFromCoordinates(
+      position!.latitude,
+      position!.longitude,
+    );
+
+    Placemark pMark = placeMarks![0];
+
+    String completeAddress =
+        '${pMark.thoroughfare}, ${pMark.locality}, ${pMark.subAdministrativeArea}, ${pMark.administrativeArea}, ${pMark.country}';
+
+    locationController.text = completeAddress;
+  }
+
 
 // enable false olunca yazi yazilmiyor bosluklara herhangibir sey
   @override
@@ -120,7 +205,13 @@ class _RegisterScreenState extends State<RegisterScreen>
                         Icons.location_on,
                         color: Colors.white,
                       ),
-                      onPressed: ()=> print("clicked"),
+                      onPressed: () {
+
+                        // get current location fonksiyonununu çagırdımız kısım
+                        getCurrentLocation();
+
+
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.teal,
                         shape: RoundedRectangleBorder(
@@ -138,7 +229,7 @@ class _RegisterScreenState extends State<RegisterScreen>
               //sadece karmaşa olmasın diye flutter düzenledi
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blueAccent,
-                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
               ),
               onPressed: ()=> print("clicked"),
               child: const Text(
