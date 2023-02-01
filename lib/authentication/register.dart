@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cakery_repo/widgets/custom_text_field.dart';
+import 'package:cakery_repo/widgets/error_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -114,6 +115,53 @@ class _RegisterScreenState extends State<RegisterScreen>
         '${pMark.thoroughfare}, ${pMark.locality}, ${pMark.subAdministrativeArea}, ${pMark.administrativeArea}, ${pMark.country}';
 
     locationController.text = completeAddress;
+  }
+
+  Future<void> formValidation() async{
+    if(imageXFile == null){
+      showDialog(
+          context: context,
+          builder: (c){
+            return ErrorDialog(
+              message: "Please select an image ! ",
+            );
+          }
+      );
+    }
+    else{
+      if(passwordController.text == confirmpasswordController.text){
+
+
+        // comfirm passwordunu doğrulama kısmını boş olmamasını kontrol ediyoruz
+        if(confirmpasswordController.text.isNotEmpty && emailController.text.isNotEmpty && nameController.text.isNotEmpty && phoneController.text.isNotEmpty && locationController.text.isNotEmpty ){
+          //start uploading image
+
+        }
+        else{
+          showDialog(
+              context: context,
+              builder: (c){
+                return ErrorDialog(
+                  message: "Please werite the complete required info for Registration ! ",
+                );
+              }
+          );
+
+        }
+      }
+      else{
+        showDialog(
+            context: context,
+            builder: (c){
+              return ErrorDialog(
+                message: "Password do not match ! ",
+              );
+            }
+        );
+
+      }
+
+    }
   }
 
 
@@ -231,7 +279,10 @@ class _RegisterScreenState extends State<RegisterScreen>
                 backgroundColor: Colors.blueAccent,
                 padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
               ),
-              onPressed: ()=> print("clicked"),
+              onPressed: (){
+                formValidation();
+
+              },
               child: const Text(
                 "Sign Up",
                 style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,),
