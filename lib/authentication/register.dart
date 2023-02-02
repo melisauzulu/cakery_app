@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:cakery_repo/widgets/custom_text_field.dart';
 import 'package:cakery_repo/widgets/error_dialog.dart';
+import 'package:cakery_repo/widgets/loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as fStorage;
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -29,6 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen>
 
   Position? position;
   List<Placemark>? placeMarks;
+  String sellerImageUrl = "";
   LocationPermission? permission; // !!!!!!!! ÖNEMLİ
 
 
@@ -135,6 +138,29 @@ class _RegisterScreenState extends State<RegisterScreen>
         // comfirm passwordunu doğrulama kısmını boş olmamasını kontrol ediyoruz
         if(confirmpasswordController.text.isNotEmpty && emailController.text.isNotEmpty && nameController.text.isNotEmpty && phoneController.text.isNotEmpty && locationController.text.isNotEmpty ){
           //start uploading image
+          showDialog(
+              context: context,
+              builder: (c){
+                return LoadingDialog(
+                  message: "Registering account",
+
+                );
+
+              }
+              );
+              String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+              fStorage.Reference reference = fStorage.FirebaseStorage.instance.ref().child("sellers").child(fileName);
+              fStorage.UploadTask uploadTask= reference.putFile(File(imageXFile!.path));
+              fStorage.TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {});
+              await taskSnapshot.ref.getDownloadURL().then((url){
+                sellerImageUrl=url;
+
+                // save info to firestore
+
+
+          });
+
+
 
         }
         else{

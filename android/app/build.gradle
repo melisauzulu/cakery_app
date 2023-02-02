@@ -49,10 +49,12 @@ android {
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
 
         // BU SAYILARA ASLA DOKUNMAYIN ŞU ANLIK :,) TEŞEKKÜRLER
-        minSdkVersion 21
+       // minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
 
     }
 
