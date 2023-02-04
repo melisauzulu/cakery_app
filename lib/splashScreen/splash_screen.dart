@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:cakery_repo/authentication/auth_screen.dart';
+import 'package:cakery_repo/global/global.dart';
+import 'package:cakery_repo/mainScreens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 
@@ -17,8 +19,19 @@ class _MySplashScreenState extends State<MySplashScreen> {
   
   startTimer(){
     
-    Timer(const Duration(seconds: 8),  () async {
+    Timer(const Duration(seconds: 5),  () async {
+
+      if(firebaseAuth.currentUser != null){ // checks if the user is already logged-in/authenticated or not
+
+      Navigator.push(context, MaterialPageRoute(builder: (c)=> const HomeScreen())); //if yes, direct user to homescreen
+
+      }
+
+      else{ //if no, diret user to authscreen
+
       Navigator.push(context, MaterialPageRoute(builder: (c)=> const AuthScreen()));
+
+      }
     });
   }
 
