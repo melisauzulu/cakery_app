@@ -1,13 +1,18 @@
 import 'dart:io';
 
+import 'package:cakery_repo/global/global.dart';
+import 'package:cakery_repo/mainScreens/home_screen.dart';
 import 'package:cakery_repo/widgets/custom_text_field.dart';
 import 'package:cakery_repo/widgets/error_dialog.dart';
 import 'package:cakery_repo/widgets/loading_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as fStorage;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -33,6 +38,7 @@ class _RegisterScreenState extends State<RegisterScreen>
   List<Placemark>? placeMarks;
   String sellerImageUrl = "";
   LocationPermission? permission; // !!!!!!!! ÖNEMLİ
+  String completeAddress = "";
 
 
   Future<void> _getImage() async{
@@ -114,13 +120,13 @@ class _RegisterScreenState extends State<RegisterScreen>
 
     Placemark pMark = placeMarks![0];
 
-    String completeAddress =
+     completeAddress =
         '${pMark.thoroughfare}, ${pMark.locality}, ${pMark.subAdministrativeArea}, ${pMark.administrativeArea}, ${pMark.country}';
 
     locationController.text = completeAddress;
   }
 
-  Future<void> formValidation() async{
+  Future<void> formValidation() async{ //runs when user clicks on sign up button
     if(imageXFile == null){
       showDialog(
           context: context,
@@ -157,6 +163,8 @@ class _RegisterScreenState extends State<RegisterScreen>
 
                 // save info to firestore
 
+                authenticateSellerAndSignUp();
+
 
           });
 
@@ -189,6 +197,75 @@ class _RegisterScreenState extends State<RegisterScreen>
 
     }
   }
+
+  void authenticateSellerAndSignUp() async{
+    //creates user ID and password inside the Firebase authentication
+
+    User? currentUser;
+    
+    await firebaseAuth.createUserWithEmailAndPassword(
+      email: emailController.text.trim(),
+       password: passwordController.text.trim(),
+       ).then((auth) {
+
+          currentUser= auth.user;
+
+       }).catchError((error){
+          Navigator.pop(context);
+           showDialog(
+            context: context,
+            builder: (c){
+              return ErrorDialog(
+                message: error.message.toString(),
+              );
+            }
+        );
+
+
+       });
+
+       if(currentUser != null){
+        saveDataToFirestore(currentUser!).then((value) {
+
+          Navigator.pop(context);
+          //send user to home page
+          Route newRoute= MaterialPageRoute(builder: (c) => HomeScreen());
+          Navigator.pushReplacement(context, newRoute);
+
+        });
+       }
+
+
+
+  }
+
+  Future saveDataToFirestore(User currentUser) async{
+
+
+    FirebaseFirestore.instance.collection("sellers").doc(currentUser.uid).set({
+
+      "sellerUID": currentUser.uid,
+      "sellerEmail": currentUser.email,
+      "sellerName": nameController.text.trim(),
+      "sellerAvatarUrl": sellerImageUrl,
+      "phone": phoneController.text.trim(),
+      "address": completeAddress,
+      "status": "approved",
+      "earnings": 0.0,
+      "lat": position!.latitude,
+      "lng": position!.longitude,
+
+    });
+
+      //saving the data locally
+      sharedPreferences = await SharedPreferences.getInstance();
+      await sharedPreferences!.setString("uid", currentUser.uid);
+      await sharedPreferences!.setString("email", currentUser.email.toString());
+      await sharedPreferences!.setString("name", nameController.text.trim());
+      await sharedPreferences!.setString("photoUrl", sellerImageUrl);
+  }
+
+
 
 
 // enable false olunca yazi yazilmiyor bosluklara herhangibir sey
@@ -287,7 +364,7 @@ class _RegisterScreenState extends State<RegisterScreen>
 
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.teal,
+                        backgroundColor: Colors.pink[300],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         )
@@ -302,7 +379,7 @@ class _RegisterScreenState extends State<RegisterScreen>
               // bu kısımda flutter kendi düzenleme yaptı satırların yeri degisik gelebilir ayni kod
               //sadece karmaşa olmasın diye flutter düzenledi
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
+                backgroundColor: Colors.pink[300],
                 padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
               ),
               onPressed: (){
