@@ -8,6 +8,7 @@ class LoadingDialog extends StatelessWidget {
 
 
 // yükleme ekranında gösterilecek olan uyarıyı bu kısımda ayarlıyoruz
+//sadece login ekranı da değil overall ekranlarda gösterilcek uyarı widgeti
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
