@@ -90,12 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
       await sharedPreferences!.setString("name", snapshot.data()!["sellerName"]);
       await sharedPreferences!.setString("photoUrl", snapshot.data()!["sellerAvatarUrl"]);
 
-
-
-
-
     });
-
 
   }
 
