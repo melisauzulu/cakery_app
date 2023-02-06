@@ -1,3 +1,4 @@
+import 'package:cakery_repo/authentication/auth_screen.dart';
 import 'package:cakery_repo/global/global.dart';
 import 'package:cakery_repo/mainScreens/home_screen.dart';
 import 'package:cakery_repo/widgets/custom_text_field.dart';
@@ -70,14 +71,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
            } );
          });
-         if(currentUser!=null){//if user is authenticated sucessfully send user to home screen
+         if(currentUser!=null){
+           //if user is authenticated sucessfully send user to home screen
+            readDataAndSetDataLocally(currentUser!);
 
-            readDataAndSetDataLocally(currentUser!).then((value) {
-              Navigator.pop(context);
-              Navigator.push(context, MaterialPageRoute(builder: (c) => const HomeScreen()));
-            });
-
-         }    
+         }
   }
 
   //after login-we store data in local storage instead of retrieving from firestore again and again
@@ -85,10 +83,33 @@ class _LoginScreenState extends State<LoginScreen> {
   Future readDataAndSetDataLocally(User currentUser) async { 
 
     await FirebaseFirestore.instance.collection("sellers").doc(currentUser.uid).get().then((snapshot) async{
-      await sharedPreferences!.setString("uid", currentUser.uid);
-      await sharedPreferences!.setString("email",snapshot.data()!["sellerEmail"]);
-      await sharedPreferences!.setString("name", snapshot.data()!["sellerName"]);
-      await sharedPreferences!.setString("photoUrl", snapshot.data()!["sellerAvatarUrl"]);
+
+      if(snapshot.exists) { // if this exists, we can save the data locally for the following key
+        // then we are going to send the seller inside the app that is to the home screen
+        await sharedPreferences!.setString("uid", currentUser.uid);
+        await sharedPreferences!.setString("email", snapshot.data()!["sellerEmail"]);
+        await sharedPreferences!.setString("name", snapshot.data()!["sellerName"]);
+        await sharedPreferences!.setString("photoUrl", snapshot.data()!["sellerAvatarUrl"]);
+
+        Navigator.pop(context);
+        Navigator.push(context, MaterialPageRoute(builder: (c)=> const HomeScreen()));
+      }
+      // if no record found, will simply direct the seller to the login sign form
+      else{
+
+        firebaseAuth.signOut();
+        Navigator.pop(context);
+        Navigator.push(context, MaterialPageRoute(builder: (c)=> const AuthScreen()));
+
+        showDialog(
+            context: context,
+            builder: (c){
+              // kullanıcı seller account yerine  sellerdan farklı başka kullanıcı account
+              // girişli mail adresi girerse sistem bu hatayı verecek !!
+              return ErrorDialog( message: "No record found ! ");
+
+            } );
+      }
 
     });
 
