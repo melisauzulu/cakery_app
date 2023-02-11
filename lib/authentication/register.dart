@@ -154,6 +154,9 @@ class _RegisterScreenState extends State<RegisterScreen>
 
               }
               );
+
+              // after successfully uploading the image to the storage basically it gives us a download URL
+              // and we serve that we assign that download URL to our seller
               String fileName = DateTime.now().millisecondsSinceEpoch.toString();
               fStorage.Reference reference = fStorage.FirebaseStorage.instance.ref().child("sellers").child(fileName);
               fStorage.UploadTask uploadTask= reference.putFile(File(imageXFile!.path));
@@ -202,6 +205,8 @@ class _RegisterScreenState extends State<RegisterScreen>
     //creates user ID and password inside the Firebase authentication
 
     User? currentUser;
+    // final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    // bu global.dart'ın içinde tanımlandığı için burdan sildik
     
     await firebaseAuth.createUserWithEmailAndPassword(
       email: emailController.text.trim(),
@@ -240,6 +245,7 @@ class _RegisterScreenState extends State<RegisterScreen>
   }
 
   Future saveDataToFirestore(User currentUser) async{
+    // this function basically we will pass user reviews from Firebase
 
 
     FirebaseFirestore.instance.collection("sellers").doc(currentUser.uid).set({
@@ -263,12 +269,13 @@ class _RegisterScreenState extends State<RegisterScreen>
       await sharedPreferences!.setString("email", currentUser.email.toString());
       await sharedPreferences!.setString("name", nameController.text.trim());
       await sharedPreferences!.setString("photoUrl", sellerImageUrl);
+
   }
 
 
 
 
-// enable false olunca yazi yazilmiyor bosluklara herhangibir sey
+// enable false olunca, bosluklara yazi yazilmiyor herhangibir sey
   @override
   Widget build(BuildContext context) {
     // Sign up sayfasinda resim ayarlanan kisim

@@ -1,5 +1,7 @@
 import 'package:cakery_repo/authentication/auth_screen.dart';
 import 'package:cakery_repo/global/global.dart';
+import 'package:cakery_repo/uploadScreens/menu_upload_screen.dart';
+import 'package:cakery_repo/widgets/my_drawer.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MyDrawer(),
 
       appBar: AppBar(
          flexibleSpace:Container(
@@ -30,32 +33,28 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ) ,
         title: Text(
+          // sellerın ismini top bar kısımına yazdırıyoruz
           sharedPreferences!.getString("name")!,
+          style: TextStyle(fontSize: 25, fontFamily: "Lobster"),
         ),
         centerTitle: true,
-        automaticallyImplyLeading: false,
-        
-        ),
-
-        body:Center(
+        automaticallyImplyLeading: true,
+        actions: [
           
-          child: ElevatedButton(
-            child: const Text("Logout"),
-            style:ElevatedButton.styleFrom(
-              backgroundColor: Colors.pink[300],
-            ),
-            onPressed:(() {
-              
-              firebaseAuth.signOut().then((value) { //allow user to logout
+          // whenever you want to add a button or a text widget at the right side of an appBar in flutter, the news basically this atciton
 
-                Navigator.push(context, MaterialPageRoute(builder: (c) => const AuthScreen()));
-
-              }); 
-              
-            } 
-             ),
-              ),
+          IconButton(
+            icon: Icon(Icons.post_add, color: Colors.white,),
+            onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (c)=> const MenusUploadScreen()));
+            },
+          ),
+          
+          
+        ],
         ),
+
+        body:Center(),
     );
   }
 }
