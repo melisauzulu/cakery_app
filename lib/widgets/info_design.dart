@@ -1,3 +1,4 @@
+import 'package:cakery_repo/mainScreens/itemsScreen.dart';
 import 'package:cakery_repo/model/menus.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,12 @@ class _InfoDesignWidgetState extends State<InfoDesignWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap:(() {
+        
+        Navigator.push(context, MaterialPageRoute(builder: (c)=> ItemsScreen(model: widget.model) ));
+
+
+      }) ,
 
       splashColor: Colors.pink[50],
       child:Padding(
