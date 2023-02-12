@@ -88,7 +88,7 @@ class _ItemsUploadScreenState extends State<ItemsUploadScreen> {
               const Icon(Icons.menu_book, color: Colors.white, size: 200.0,),
               ElevatedButton(
                 child: const Text(
-                  "Add New Menu",
+                  "Add New Items",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
