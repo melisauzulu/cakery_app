@@ -4,6 +4,7 @@ import 'package:cakery_repo/global/global.dart';
 import 'package:cakery_repo/mainScreens/home_screen.dart';
 import 'package:cakery_repo/widgets/error_dialog.dart';
 import 'package:cakery_repo/widgets/progress_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as storageRef;
@@ -332,6 +333,7 @@ class _MenusUploadScreenState extends State<MenusUploadScreen> {
         // upload image
          String downloadURL = await uploadImage(File(imageXFile!.path));
         // save info to firebase
+        saveInfo(downloadURL);
 
       }
       else{
@@ -363,6 +365,34 @@ class _MenusUploadScreenState extends State<MenusUploadScreen> {
     }
 
   }
+
+  saveInfo(String downloadUrl){ //saving menu information to database at this reference
+
+    final ref = FirebaseFirestore.instance
+    .collection("sellers").doc(sharedPreferences!.getString("uid")).collection("menus");
+
+    ref.doc(uniqueIdName).set({
+
+      "menuID": uniqueIdName,
+      "sellerUID": sharedPreferences!.getString("uid"),
+      "menuInfo": shortInfoController.text.toString(),
+      "menuTitle": titleController.text.toString(),
+      "publishDate": DateTime.now(),
+      "status": "available",
+      "thumbnailUrl": downloadUrl,
+
+    });
+
+    clearMenusUploadForm();
+    setState(() {
+      
+      uniqueIdName = DateTime.now().millisecondsSinceEpoch.toString();
+      uploading = false;
+
+    });
+
+  }
+
   uploadImage(mImageFile) async{
     // WE cleared a reference to infer storage and inside the menus folder
     // we want to put our file, reference to our child
