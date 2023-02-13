@@ -313,7 +313,7 @@ class _ItemsUploadScreenState extends State<ItemsUploadScreen> {
             title: Container(
               width: 250,
               child: TextField(
-                
+                //keyboardType: TextInputType.number,
                 style: const TextStyle(color: Colors.black),
                 controller: descriptionController,
                   decoration: const InputDecoration(
@@ -466,3 +466,5 @@ class _ItemsUploadScreenState extends State<ItemsUploadScreen> {
     return imageXFile == null ? defaultScreen() : itemsUploadFormScreen();
   }
 }
+
+//316. satırsa kod ekledim 51. videonun sonunda yazılan eksikti
