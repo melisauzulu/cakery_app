@@ -68,7 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
               stream: FirebaseFirestore.instance
               .collection("sellers")
               .doc(sharedPreferences!.getString("uid"))
-              .collection("menus").snapshots(),
+              .collection("menus")
+              .orderBy("publishDate", descending: true) //menü sıralaması yeniden eskiye
+              .snapshots(),
 
               builder: ((context, snapshot) {
 

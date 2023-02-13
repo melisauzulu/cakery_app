@@ -2,9 +2,16 @@ import 'package:cakery_repo/global/global.dart';
 import 'package:cakery_repo/model/menus.dart';
 import 'package:cakery_repo/uploadScreens/items_upload_screen.dart';
 import 'package:cakery_repo/uploadScreens/menu_upload_screen.dart';
+import 'package:cakery_repo/widgets/items_design.dart';
 import 'package:cakery_repo/widgets/my_drawer.dart';
 import 'package:cakery_repo/widgets/text_widget_header.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+
+import '../model/items.dart';
+import '../widgets/info_design.dart';
+import '../widgets/progress_bar.dart';
 
 
 class ItemsScreen extends StatefulWidget {
@@ -63,7 +70,45 @@ class _ItemsScreenState extends State<ItemsScreen> {
       slivers: [
         SliverPersistentHeader(
           pinned:true,
-          delegate: TextWidgetHeader(title: "My  "+ widget.model!.menuTitle.toString() +" 's Items" ))
+          delegate: TextWidgetHeader(title: "My  "+ widget.model!.menuTitle.toString() +" 's Items" )),
+        StreamBuilder <QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection("sellers")
+              .doc(sharedPreferences!.getString("uid"))
+              .collection("menus")
+              .doc(widget.model!.menuID)
+              .collection("items")
+              .orderBy("publishDate", descending: true) //item sıralaması yeniden eskiye
+              .snapshots(),
+
+          builder: ((context, snapshot) {
+
+            return !snapshot.hasData //if data not exists
+                ? SliverToBoxAdapter(
+              child:Center(child:circularProgress()),
+
+            )
+                : SliverStaggeredGrid.countBuilder(
+              crossAxisCount: 1,
+              staggeredTileBuilder: (c) => StaggeredTile.fit(1),
+              itemBuilder: (context,index){
+
+                Items model = Items.fromJson(
+
+                  snapshot.data!.docs[index].data()! as Map<String, dynamic>,
+
+                );
+                return ItemsDesignWidget(
+                  model:model,
+                  context: context,
+                );
+              },
+              itemCount: snapshot.data!.docs.length,
+            );
+          }),
+        ),
+
+
       ],)
    
    

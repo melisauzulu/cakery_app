@@ -313,7 +313,6 @@ class _ItemsUploadScreenState extends State<ItemsUploadScreen> {
             title: Container(
               width: 250,
               child: TextField(
-                //keyboardType: TextInputType.number,
                 style: const TextStyle(color: Colors.black),
                 controller: descriptionController,
                   decoration: const InputDecoration(
@@ -364,6 +363,8 @@ class _ItemsUploadScreenState extends State<ItemsUploadScreen> {
     setState(() {
       shortInfoController.clear();
       titleController.clear();
+      priceController.clear();
+      descriptionController.clear();
       imageXFile = null;
     });
 
@@ -374,7 +375,7 @@ class _ItemsUploadScreenState extends State<ItemsUploadScreen> {
     });
     if(imageXFile != null){
 
-      if(shortInfoController.text.isNotEmpty && titleController.text.isNotEmpty){
+      if(shortInfoController.text.isNotEmpty && titleController.text.isNotEmpty && descriptionController.text.isNotEmpty && priceController.text.isNotEmpty){
 
         setState(() {
           uploading = true;
@@ -418,41 +419,70 @@ class _ItemsUploadScreenState extends State<ItemsUploadScreen> {
   saveInfo(String downloadUrl){ //saving menu information to database at this reference
 
     final ref = FirebaseFirestore.instance
-    .collection("sellers").doc(sharedPreferences!.getString("uid")).collection("menus");
+    .collection("sellers").doc(sharedPreferences!.getString("uid")).collection("menus").doc(widget.model!.menuID).collection("items");
+    //created sub collection by the name item for specific menus to keep the record
 
     ref.doc(uniqueIdName).set({
+      //saving keys to database for items
 
-      "menuID": uniqueIdName,
+      "itemID": uniqueIdName,
+      "menuID": widget.model!.menuID,
       "sellerUID": sharedPreferences!.getString("uid"),
-      "menuInfo": shortInfoController.text.toString(),
-      "menuTitle": titleController.text.toString(),
+      "sellerName": sharedPreferences!.getString("name"),
+      "shortInfo": shortInfoController.text.toString(),
+      "longDescription": descriptionController.text.toString(),
+      "price": int.parse(priceController.text),
+      "title": titleController.text.toString(),
       "publishDate": DateTime.now(),
       "status": "available",
       "thumbnailUrl": downloadUrl,
 
-    });
+    }).then((value)
+    {
+      //save it as a main items collection
+      final itemsRef = FirebaseFirestore.instance
+          .collection("items");
 
-    clearMenusUploadForm();
-    setState(() {
-      
-      uniqueIdName = DateTime.now().millisecondsSinceEpoch.toString();
-      uploading = false;
+      itemsRef.doc(uniqueIdName).set({
+
+        "itemID": uniqueIdName,
+        "menuID": widget.model!.menuID,
+        "sellerUID": sharedPreferences!.getString("uid"),
+        "sellerName": sharedPreferences!.getString("name"),
+        "shortInfo": shortInfoController.text.toString(),
+        "longDescription": descriptionController.text.toString(),
+        "price": int.parse(priceController.text),
+        "title": titleController.text.toString(),
+        "publishDate": DateTime.now(),
+        "status": "available",
+        "thumbnailUrl": downloadUrl,
+
+      });
+
+    }).then((value) {
+      clearMenusUploadForm();
+      setState(() {
+
+        uniqueIdName = DateTime.now().millisecondsSinceEpoch.toString();
+        uploading = false;
+
+      });
 
     });
 
   }
 
   uploadImage(mImageFile) async{
-    // WE cleared a reference to infer storage and inside the menus folder
+    // WE cleared a reference to infer storage and inside the item folder
     // we want to put our file, reference to our child
-    //we serve that reference and references to the menus
+    //we serve that reference and references to the items
     // we have to basically get the download, which we cant get using the task snapshot
     // we implement that and using the task snapshot, we get the download URL of the uploaded image
     //and then we return the download URL
     storageRef.Reference reference = storageRef.FirebaseStorage
         .instance
         .ref()
-        .child("menus");
+        .child("items");
     storageRef.UploadTask uploadTask= reference.child(uniqueIdName + ".jpg").putFile(mImageFile);
 
     storageRef.TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {});
@@ -467,4 +497,3 @@ class _ItemsUploadScreenState extends State<ItemsUploadScreen> {
   }
 }
 
-//316. satırsa kod ekledim 51. videonun sonunda yazılan eksikti
