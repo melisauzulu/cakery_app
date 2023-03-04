@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 return !snapshot.hasData //if data not exists
                 ? SliverToBoxAdapter(
-                  child:Center(child:circularProgress()),
+                  child:Center(child:circularProgress(),),
                 
                 )
                 : SliverStaggeredGrid.countBuilder(
