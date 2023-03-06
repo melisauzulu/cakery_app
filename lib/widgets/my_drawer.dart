@@ -1,6 +1,7 @@
 import 'package:cakery_repo/authentication/auth_screen.dart';
 import 'package:cakery_repo/global/global.dart';
 import 'package:cakery_repo/mainScreens/home_screen.dart';
+import 'package:cakery_repo/mainScreens/new_orders_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -103,6 +104,8 @@ class MyDrawer extends StatelessWidget {
 
                        onTap:(() {
                          //For Later
+
+                         Navigator.push(context, MaterialPageRoute(builder: (c) => NewOrdersScreen()));
                        }) ,               
 
                    ),

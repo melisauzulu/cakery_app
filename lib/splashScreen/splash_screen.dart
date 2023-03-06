@@ -19,7 +19,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
   
   startTimer(){
     
-    Timer(const Duration(seconds: 5),  () async {
+    Timer(const Duration(seconds: 2),  () async {
 
       if(firebaseAuth.currentUser != null){ // checks if the user is already logged-in/authenticated or not
 
