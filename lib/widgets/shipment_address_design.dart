@@ -19,10 +19,7 @@ class ShipmentAddressDesign extends StatelessWidget
 
 
 
-  confirmedParcelShipment(BuildContext context, String getOrderID, String sellerId, String purchaserId)
-  {
 
-  }
 
 
 
