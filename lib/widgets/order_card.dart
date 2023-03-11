@@ -17,7 +17,8 @@ class OrderCard extends StatelessWidget
     this.orderID,
     this.seperateQuantitiesList,
   });
-
+// deneme
+  //deneme
   @override
   Widget build(BuildContext context) {
     return InkWell(
