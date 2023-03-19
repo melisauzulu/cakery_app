@@ -1,9 +1,11 @@
+import 'dart:ffi';
+
 import 'package:cakery_repo/global/global.dart';
 import 'package:cakery_repo/model/address.dart';
 import 'package:cakery_repo/splashScreen/splash_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 
@@ -16,11 +18,6 @@ class ShipmentAddressDesign extends StatelessWidget
   final String? orderByUser;
 
   ShipmentAddressDesign({this.model, this.orderStatus, this.orderId, this.sellerId, this.orderByUser});
-
-
-
-
-
 
 
   @override
@@ -83,8 +80,21 @@ class ShipmentAddressDesign extends StatelessWidget
           child: Center(
             child: InkWell(
               onTap: ()
-              {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const MySplashScreen()));
+              async {
+                if(orderStatus=="normal"){
+                  var output; 
+                  await orderStatusChanger().then((value) => output= 1, onError: (e) => output=0);
+                  
+                  if (output == 1){
+                  Fluttertoast.showToast(msg: "Your order is done!");
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const MySplashScreen()));
+                  }else{
+                  Fluttertoast.showToast(msg: "Change unsuccessfull!");
+                  }                    
+                }else{
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const MySplashScreen()));
+                }
+
               },
               child: Container(
                 decoration: const BoxDecoration(
@@ -116,4 +126,15 @@ class ShipmentAddressDesign extends StatelessWidget
       ],
     );
   }
+
+  Future orderStatusChanger() async{ 
+    var success = 0; 
+      final collectionReference = FirebaseFirestore.instance.collection("orders").doc(this.orderId);
+      await collectionReference.update({"status": "ended"}).then((value) => 
+        success= 1,
+        onError: (e) => success=0);
+      return success;  
+  }
+
+ 
 }
