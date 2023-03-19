@@ -7,6 +7,7 @@ import 'package:cakery_repo/widgets/progress_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_storage/firebase_storage.dart' as storageRef;
 
 
@@ -225,7 +226,7 @@ class _MenusUploadScreenState extends State<MenusUploadScreen> {
                    letterSpacing: 3,
                  ),
                 ),
-              onPressed: uploading ? null: ()=> validateUploadForm(),
+              onPressed: uploading ? () => Fluttertoast.showToast(msg: "You ar already uploading!!") : ()=> validateUploadForm(),
               // we are cheking that if uploading is true there and doing nothing means nothing else do validateUploadForm
             ),
           ],
@@ -316,6 +317,7 @@ class _MenusUploadScreenState extends State<MenusUploadScreen> {
       shortInfoController.clear();
       titleController.clear();
       imageXFile = null;
+      uploading = false;
     });
 
   }
@@ -384,6 +386,7 @@ class _MenusUploadScreenState extends State<MenusUploadScreen> {
     });
 
     clearMenusUploadForm();
+    Fluttertoast.showToast(msg: "Menu Created Succesfully");
     setState(() {
       
       uniqueIdName = DateTime.now().millisecondsSinceEpoch.toString();
