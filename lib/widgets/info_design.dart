@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 
-
+//deneme
 class InfoDesignWidget extends StatefulWidget {//this class will recieve these 2 parameters
 
 

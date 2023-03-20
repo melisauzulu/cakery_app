@@ -4,7 +4,7 @@ class ErrorDialog extends StatelessWidget {
 
   final String? message;
   ErrorDialog({this.message});
-
+// deneme
 // Satıcı kayıt olmaya çalıştığında resm yüklemezse vey şifre doğrulamasını yanlış girerse veya
   // doldurması gerekn alanları doldurmazsa uyarı mesajı çıkmasını sağlayan kısım bu kısım !!
 
