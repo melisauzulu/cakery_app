@@ -7,6 +7,7 @@ import 'package:cakery_repo/widgets/loading_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -86,13 +87,26 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if(snapshot.exists) { // if this exists, we can save the data locally for the following key
         // then we are going to send the seller inside the app that is to the home screen
-        await sharedPreferences!.setString("uid", currentUser.uid);
-        await sharedPreferences!.setString("email", snapshot.data()!["sellerEmail"]);
-        await sharedPreferences!.setString("name", snapshot.data()!["sellerName"]);
-        await sharedPreferences!.setString("photoUrl", snapshot.data()!["sellerAvatarUrl"]);
 
-        Navigator.pop(context);
-        Navigator.push(context, MaterialPageRoute(builder: (c)=> const HomeScreen()));
+        if(snapshot.data()!["status"] == "approved"){
+          await sharedPreferences!.setString("uid", currentUser.uid);
+          await sharedPreferences!.setString("email", snapshot.data()!["sellerEmail"]);
+          await sharedPreferences!.setString("name", snapshot.data()!["sellerName"]);
+          await sharedPreferences!.setString("photoUrl", snapshot.data()!["sellerAvatarUrl"]);
+
+          Navigator.pop(context);
+          Navigator.push(context, MaterialPageRoute(builder: (c)=> const HomeScreen()));
+        }
+
+        else{
+          firebaseAuth.signOut();
+          Navigator.pop(context);
+          Fluttertoast.showToast(msg: "Admin has blocked your account. \n\n Please contact via e-mail address: admin1@cakery.com");
+
+          
+        }
+
+
       }
       // if no record found, will simply direct the seller to the login sign form
       else{
