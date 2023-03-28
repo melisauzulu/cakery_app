@@ -1,6 +1,7 @@
 import 'package:cakery_repo/authentication/auth_screen.dart';
 import 'package:cakery_repo/global/global.dart';
 import 'package:cakery_repo/model/menus.dart';
+import 'package:cakery_repo/splashScreen/splash_screen.dart';
 import 'package:cakery_repo/uploadScreens/menu_upload_screen.dart';
 import 'package:cakery_repo/widgets/info_design.dart';
 import 'package:cakery_repo/widgets/my_drawer.dart';
@@ -9,6 +10,7 @@ import 'package:cakery_repo/widgets/text_widget_header.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,6 +20,34 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  restrictBlockedSellerFromUsingApp() async {
+    await FirebaseFirestore.instance.collection("sellers")
+        .doc(firebaseAuth.currentUser!.uid)
+        .get().then((snapshot) {
+      if(snapshot.data()!["status"] == "approved"){
+
+        Fluttertoast.showToast(msg: "You have been blocked !");
+        firebaseAuth.signOut();
+        Navigator.push(context, MaterialPageRoute(builder: (c)=> MySplashScreen()));
+      }
+
+
+    });
+
+  }
+
+  @override
+  void initState() {
+
+    super.initState();
+
+    restrictBlockedSellerFromUsingApp();
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
