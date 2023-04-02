@@ -36,87 +36,114 @@ class _ItemsUploadScreenState extends State<ItemsUploadScreen> {
   String uniqueIdName = DateTime.now().millisecondsSinceEpoch.toString();
 
 
-  defaultScreen(){
-    return Scaffold(
-      appBar: AppBar(
-        flexibleSpace:Container(
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Colors.white54,
-                  Colors.grey,
-                ],
-                begin: const FractionalOffset(0.0, 0.0),
-                end: const FractionalOffset(2.0, 2.0),
-                stops: [0.0, 1.0],
-                tileMode: TileMode.clamp,
-              )
-          ),
-        ) ,
-        title: const Text(
-          // sellerın menüye yeni item eklemesini sağlıyor.
-          "Add New Items",
-          style: TextStyle(fontSize: 25, fontFamily: "Lobster"),
-        ),
-        centerTitle: true,
-        automaticallyImplyLeading: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white,),
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (c)=> const HomeScreen()));
-          },
-        ),
-      ),
-      body: Container(
+defaultScreen(){
+  return Scaffold(
+    appBar: AppBar(
+      flexibleSpace: Container(
         decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.blueGrey,
-                Colors.white,
-              ],
-              begin: const FractionalOffset(0.0, 0.0),
-              end: const FractionalOffset(2.0, 2.0),
-              stops: [0.0, 1.0],
-              tileMode: TileMode.clamp,
-            )
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // menu iconunun değiştirildiği yer
-              const Icon(Icons.menu_book, color: Colors.white, size: 200.0,),
-              ElevatedButton(
-                child: const Text(
-                  "Add New Items",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),
-                ),
-                style: ButtonStyle(
-
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.pink),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-
-
-                ),
-                onPressed: () {
-
-                  takeImage(context);
-                },
-              ),
+          gradient: LinearGradient(
+            colors: [
+              Colors.white54,
+              Colors.grey,
             ],
+            begin: const FractionalOffset(0.0, 0.0),
+            end: const FractionalOffset(2.0, 2.0),
+            stops: [0.0, 1.0],
+            tileMode: TileMode.clamp,
           ),
         ),
       ),
-    );
-
-  }
+      title: const Text(
+        "Add New Items",
+        style: TextStyle(fontSize: 25, fontFamily: "Lobster"),
+      ),
+      centerTitle: true,
+      automaticallyImplyLeading: true,
+      leading: IconButton(
+        icon: const Icon(
+          Icons.arrow_back,
+          color: Colors.white,
+        ),
+        onPressed: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (c) => const HomeScreen()),
+          );
+        },
+      ),
+    ),
+    body: Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Colors.blueGrey,
+            Colors.white,
+          ],
+          begin: const FractionalOffset(0.0, 0.0),
+          end: const FractionalOffset(2.0, 2.0),
+          stops: [0.0, 1.0],
+          tileMode: TileMode.clamp,
+        ),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(
+              Icons.menu_book,
+              color: Colors.white,
+              size: 200.0,
+            ),
+            ElevatedButton(
+              child: const Text(
+                "Add New Items",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.pink),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                takeImage(context);
+              },
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              child: const Text(
+                "Add Customized Item",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.pink),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+            context,
+            MaterialPageRoute(builder: (c) => const HomeScreen()),
+          );
+              },
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
   takeImage(mContext){
 
     return showDialog(context: mContext,

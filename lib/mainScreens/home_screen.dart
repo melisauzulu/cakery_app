@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await FirebaseFirestore.instance.collection("sellers")
         .doc(firebaseAuth.currentUser!.uid)
         .get().then((snapshot) {
-      if(snapshot.data()!["status"] == "approved"){
+      if(snapshot.data()!["status"] == "not approved"){
 
         Fluttertoast.showToast(msg: "You have been blocked !");
         firebaseAuth.signOut();
