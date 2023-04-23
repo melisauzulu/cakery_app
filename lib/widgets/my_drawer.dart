@@ -6,6 +6,8 @@ import 'package:cakery_repo/mainScreens/home_screen.dart';
 import 'package:cakery_repo/mainScreens/new_orders_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../mainScreens/custom_cake_approval_screen.dart';
+
 class MyDrawer extends StatelessWidget {
 
 
@@ -116,6 +118,27 @@ class MyDrawer extends StatelessWidget {
                    height:10,
                    color: Colors.pink,
                    thickness: 2,),
+
+                ListTile(
+                  leading:  Icon(Icons.reorder,color:Colors.pink[500]),
+                  title: const Text(
+                    "Custom Cake Approval",
+                    style:TextStyle(color:Colors.black,),
+
+                  ),
+
+                  onTap:(() {
+                    //For Later
+
+                    Navigator.push(context, MaterialPageRoute(builder: (c) => CustomCakesScreen()));
+                  }) ,
+
+                ),
+
+                const Divider(
+                  height:10,
+                  color: Colors.pink,
+                  thickness: 2,),
 
                     ListTile(
                     leading:  Icon(Icons.local_shipping,color:Colors.pink[500]),

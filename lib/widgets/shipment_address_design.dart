@@ -71,6 +71,24 @@ class ShipmentAddressDesign extends StatelessWidget
             model!.fullAddress!,
             textAlign: TextAlign.justify,
           ),
+        ),Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Text(
+            model!.fullAddress!,
+            textAlign: TextAlign.justify,
+          ),
+        ),        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Text(
+            model!.fullAddress!,
+            textAlign: TextAlign.justify,
+          ),
+        ),        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Text(
+            model!.fullAddress!,
+            textAlign: TextAlign.justify,
+          ),
         ),
 
 
