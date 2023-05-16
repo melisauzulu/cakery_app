@@ -122,12 +122,11 @@ Widget placedOrderDesignWidget(Items model, BuildContext context, seperateQuanti
                       fontSize: 14,
                     ),
                   ),
-                  /*
+
                   //TODO: add quantity to here
                   Expanded(
                     child: Text(
-                    // HEREEEEEEE!!!
-                      seperateQuantitiesList,
+                      model.quantity.toString(),
                       style: const TextStyle(
                         color: Colors.black54,
                         fontSize: 30,
@@ -135,7 +134,7 @@ Widget placedOrderDesignWidget(Items model, BuildContext context, seperateQuanti
                       ),
                     ),
                   ),
-                  */
+
                 ],
               ),
 

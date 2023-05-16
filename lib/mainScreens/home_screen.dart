@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../assistantMethods/assistant_methods.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -41,7 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
 
     super.initState();
-
     restrictBlockedSellerFromUsingApp();
   }
 

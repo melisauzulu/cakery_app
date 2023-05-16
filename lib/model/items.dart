@@ -19,6 +19,7 @@ class Items {
   String? selectedTopping;
   String? selectedOrderType;
   String? responseMessage;
+  int? quantity;
 
   Items({
     this.menuId,
@@ -36,8 +37,7 @@ class Items {
     this.selectedTopping,
     this.selectedOrderType,
     this.responseMessage,
-
-
+    this.quantity
   });
 
   Items.fromJson(Map<String, dynamic> json)
@@ -57,6 +57,7 @@ class Items {
     selectedTopping = json['selectedTopping'];
     selectedOrderType = json['selectedOrderType'];
     responseMessage = json['responseMessage'];
+    quantity = json['quantity'];
   }
 
   Map<String, dynamic> toJson()
@@ -76,11 +77,9 @@ class Items {
     data['selectedTopping'] = selectedTopping;
     data['selectedOrderType'] = selectedOrderType;
     data['responseMessage'] = responseMessage;
-
+    data['quantity'] = quantity;
 
     return data;
-
-
   }
 
 

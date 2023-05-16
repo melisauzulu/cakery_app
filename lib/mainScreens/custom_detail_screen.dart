@@ -4,6 +4,7 @@ import 'package:cakery_repo/widgets/shipment_address_design.dart';
 import 'package:cakery_repo/widgets/status_banner.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 import '../model/items.dart';
@@ -37,6 +38,7 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
   String thumbnailUrl = "";
   String customerId = "";
   int price = 0;
+  int quantity=0;
 
   getCustomInfo() {
     FirebaseFirestore.instance
@@ -58,6 +60,7 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
       status = DocumentSnapshot.data()!["status"].toString();
       thumbnailUrl = DocumentSnapshot.data()!["thumbnailUrl"].toString();
       price = DocumentSnapshot.data()!["price"];
+      quantity = DocumentSnapshot.data()!["quantity"];
     });
   }
 
@@ -77,6 +80,26 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
 
     getCustomInfo();
     getCustomerInfo();
+  }
+
+  Future<void> updateStatus() async {
+    DocumentSnapshot requestedCakeDoc = await FirebaseFirestore.instance
+        .collection('requested_cakes')
+        .doc(widget.itemID) // Replace with the actual document ID
+        .get();
+
+    if (requestedCakeDoc.exists) {
+      // Extract the item ID from the document data
+      String requestedItemId = (requestedCakeDoc.data()! as Map<String, dynamic>)['itemID'];
+
+      if (requestedItemId == widget.itemID) {
+        // Update the status field to "approved"
+        await requestedCakeDoc.reference.update({'status': 'approved'});
+        print('Status updated successfully!');
+      }
+    } else {
+      print('requested_cakes document does not exist.');
+    }
   }
 
   Future<void> updateThePrice( int newPrice) async {
@@ -101,8 +124,10 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
   }
 
 
+
+
   Future<void> addToUsersCart() async {
-    List<String> tempList = ["${widget.itemID}" + ":1"];
+    List<String> tempList = ["${widget.itemID}" + ":${quantity}"+":"+"${sellerUID}"];
     // Get a reference to the current user's document in the "users" collection
     DocumentReference userRef =
     FirebaseFirestore.instance.collection("users").doc(customerId);
@@ -110,7 +135,7 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
     try {
       // Update the "userCart" field in the document
       await userRef.update({
-        "userCart": FieldValue.arrayUnion(tempList),
+        "customCart": FieldValue.arrayUnion(tempList),
       });
       print("User cart updated successfully!");
     } catch (error) {
@@ -203,7 +228,7 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            "TODO CUSTOMER RELATED STUFF= " + customerId!,
+                            "TODO CUSTOMER RELATED STUFF such as name= " + customerId!,
                             style: const TextStyle(fontSize: 16),
                           ),
                         ),
@@ -217,10 +242,20 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
                         const Divider(
                           thickness: 4,
                         ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Quantity : " + quantity.toString(),
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 4,
+                        ),
                         const SizedBox(height: 10.0),
                         TextFormField(
                           decoration: InputDecoration(
-                            hintText: 'Enter the price',
+                            hintText: 'Enter the price per cake',
                             labelText: 'Price',
                             border: OutlineInputBorder(),
                           ),
@@ -245,6 +280,13 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
 
                                   addToUsersCart();
                                   updateThePrice(price);
+                                  updateStatus();
+
+                                  Navigator.pop(context);
+                                  Fluttertoast.showToast(
+                                      msg: "Custom Cake Request Approved.");
+
+
                                 }
                               },
                               child: Text("Approve"),
