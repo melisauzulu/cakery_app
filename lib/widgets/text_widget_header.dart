@@ -15,7 +15,7 @@ class TextWidgetHeader extends SliverPersistentHeaderDelegate {
      decoration: const BoxDecoration(
                 gradient: LinearGradient(
                     colors: [
-                      Colors.white54,
+                      Colors.blueGrey,
                       Colors.pink, //MELİSAYA NOT BU GRİYDİ!!
                     ],
                   begin: const FractionalOffset(0.0, 0.0),
@@ -36,7 +36,7 @@ class TextWidgetHeader extends SliverPersistentHeaderDelegate {
           textAlign: TextAlign.center,
           style: const TextStyle(
           fontFamily: "Kiwi",
-          fontSize: 30 ,
+          fontSize: 28 ,
           letterSpacing: 2,
           color:Colors.white,
 

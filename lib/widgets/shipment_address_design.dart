@@ -100,15 +100,15 @@ class ShipmentAddressDesign extends StatelessWidget
               onTap: ()
               async {
                 if(orderStatus=="normal"){
-                  var output; 
+                  var output;
                   await orderStatusChanger().then((value) => output= 1, onError: (e) => output=0);
-                  
+
                   if (output == 1){
-                  Fluttertoast.showToast(msg: "Your order is done!");
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const MySplashScreen()));
+                    Fluttertoast.showToast(msg: "Your order is done!");
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const MySplashScreen()));
                   }else{
-                  Fluttertoast.showToast(msg: "Change unsuccessfull!");
-                  }                    
+                    Fluttertoast.showToast(msg: "Change unsuccessfull!");
+                  }
                 }else{
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const MySplashScreen()));
                 }
@@ -132,7 +132,7 @@ class ShipmentAddressDesign extends StatelessWidget
                 child:  Center(
                   child: Text(
                     orderStatus == "ended" ? "Go Back" : "Order Packing - Done",
-                    style: const TextStyle(color: Colors.white, fontSize: 15.0),
+                    style: const TextStyle(color: Colors.white, fontSize: 18.0),
                   ),
                 ),
               ),
@@ -144,15 +144,14 @@ class ShipmentAddressDesign extends StatelessWidget
       ],
     );
   }
-
-  Future orderStatusChanger() async{ 
-    var success = 0; 
-      final collectionReference = FirebaseFirestore.instance.collection("orders").doc(this.orderId);
-      await collectionReference.update({"status": "ended"}).then((value) => 
-        success= 1,
+  Future orderStatusChanger() async{
+    var success = 0;
+    final collectionReference = FirebaseFirestore.instance.collection("orders").doc(this.orderId);
+    await collectionReference.update({"status": "ended"}).then((value) =>
+    success= 1,
         onError: (e) => success=0);
-      return success;  
+    return success;
   }
 
- 
+
 }

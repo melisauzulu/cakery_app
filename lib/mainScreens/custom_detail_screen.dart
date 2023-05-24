@@ -228,7 +228,7 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            "TODO CUSTOMER RELATED STUFF such as name= " + customerId!,
+                            "Customer: " + customerId!,
                             style: const TextStyle(fontSize: 16),
                           ),
                         ),
@@ -252,7 +252,7 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
                         const Divider(
                           thickness: 4,
                         ),
-                        const SizedBox(height: 10.0),
+                        const SizedBox(height: 15.0),
                         TextFormField(
                           decoration: InputDecoration(
                             hintText: 'Enter the price per cake',

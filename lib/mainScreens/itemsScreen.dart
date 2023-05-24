@@ -70,7 +70,7 @@ class _ItemsScreenState extends State<ItemsScreen> {
       slivers: [
         SliverPersistentHeader(
           pinned:true,
-          delegate: TextWidgetHeader(title: "My  "+ widget.model!.menuTitle.toString() +" 's Items" )),
+          delegate: TextWidgetHeader(title: " "+ widget.model!.menuTitle.toString() +" " )),
         StreamBuilder <QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection("sellers")

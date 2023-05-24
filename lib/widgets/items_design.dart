@@ -42,12 +42,12 @@ class _ItemsDesignWidgetState extends State<ItemsDesignWidget> {
               child: Column(
                 children: [
                   Divider(
-                    height: 4,
+                    height: 5,
                     thickness: 3,
                     color:Colors.pink[100],
                   ),
 
-                  const SizedBox(height: 20,),
+                  const SizedBox(height: 30,),
 
                   Text(
                       widget.model!.title!,
@@ -69,14 +69,14 @@ class _ItemsDesignWidgetState extends State<ItemsDesignWidget> {
 
                   const SizedBox(height: 20.0,),
 
-                  Divider(
+                 // Divider(
 
-                    height: 4,
-                    thickness: 3,
-                    color:Colors.pink[100],
+                   // height: 5,
+                   // thickness: 3,
+                   // color:Colors.pink[100],
 
 
-                  ),
+                 // ),
                   const SizedBox(height: 10,),
 
                   Text(

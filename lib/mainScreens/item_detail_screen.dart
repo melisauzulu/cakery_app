@@ -103,8 +103,8 @@ class _ItemDetailScreenState extends State<ItemDetailScreen>
                  decoration: const BoxDecoration(
                      gradient: LinearGradient(
                        colors: [
-                         Colors.white54,
-                         Colors.grey,
+                         Colors.blueGrey,
+                         Colors.pinkAccent,
                        ],
                        begin: const FractionalOffset(0.0, 0.0),
                        end: const FractionalOffset(2.0, 2.0),
@@ -119,7 +119,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen>
                    //Add to cart button
                    child: Text(
                      "Delete this item",
-                     style: TextStyle(color: Colors.pink, fontSize: 15),
+                     style: TextStyle(color: Colors.white, fontSize: 15),
                    ),
                  ),
 

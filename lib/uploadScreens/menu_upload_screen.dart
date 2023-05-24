@@ -221,7 +221,7 @@ class _MenusUploadScreenState extends State<MenusUploadScreen> {
                  style: TextStyle(
                    color: Colors.white,
                    fontWeight: FontWeight.bold,
-                   fontSize: 18,
+                   fontSize: 15,
                    fontFamily: "Varela",
                    letterSpacing: 3,
                  ),

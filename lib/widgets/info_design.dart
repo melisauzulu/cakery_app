@@ -66,7 +66,7 @@ class _InfoDesignWidgetState extends State<InfoDesignWidget> {
                 ),
                 Image.network(
                   widget.model!.thumbnailUrl!,
-                  height:260,
+                  height:280,
                   fit:BoxFit.cover,
       
                 ),
@@ -80,7 +80,7 @@ class _InfoDesignWidgetState extends State<InfoDesignWidget> {
                       widget.model!.menuTitle!,
                       style:const TextStyle(
                         color:Colors.black,
-                        fontSize:18,
+                        fontSize:19,
                         fontFamily: "Kiwi",
                          ),
                     ),
