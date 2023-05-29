@@ -1,6 +1,5 @@
 import 'package:cakery_repo/authentication/auth_screen.dart';
 import 'package:cakery_repo/global/global.dart';
-import 'package:cakery_repo/mainScreens/earnings_screen.dart';
 import 'package:cakery_repo/mainScreens/history_screen.dart';
 import 'package:cakery_repo/mainScreens/home_screen.dart';
 import 'package:cakery_repo/mainScreens/new_orders_screen.dart';

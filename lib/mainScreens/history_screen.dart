@@ -42,6 +42,7 @@ class _HistoryScreenState extends State<HistoryScreen>
                       .collection("items")
                       .where("itemID", whereIn: separateOrderItemIDs((snapshot.data!.docs[index].data()! as Map<String, dynamic>) ["productIDs"]))
                       .where("sellerUID", whereIn: (snapshot.data!.docs[index].data()! as Map<String, dynamic>)["uid"])
+                      //.where("orderBy", whereIn: (snapshot.data!.docs[index].data()! as Map<String, dynamic>)["uid"])
                       .orderBy("publishDate", descending: true)
                       .get(),
                   builder: (c, snap)
