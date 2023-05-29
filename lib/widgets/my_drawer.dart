@@ -80,7 +80,7 @@ class MyDrawer extends StatelessWidget {
                    color: Colors.pink,
                    thickness: 2,),
 
-                    ListTile(
+                  /*  ListTile(
                     leading:  Icon(Icons.monetization_on,color:Colors.pink[500]),
                     title: const Text(
                        "My Earnings",
@@ -96,7 +96,7 @@ class MyDrawer extends StatelessWidget {
                    const Divider(
                    height:10,
                    color: Colors.pink,
-                   thickness: 2,),
+                   thickness: 2,), */
 
                     ListTile(
                     leading:  Icon(Icons.reorder,color:Colors.pink[500]),
@@ -120,7 +120,7 @@ class MyDrawer extends StatelessWidget {
                    thickness: 2,),
 
                 ListTile(
-                  leading:  Icon(Icons.reorder,color:Colors.pink[500]),
+                  leading:  Icon(Icons.cake,color:Colors.pink[500]),
                   title: const Text(
                     "Custom Cake Approval",
                     style:TextStyle(color:Colors.black,),

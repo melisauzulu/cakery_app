@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cakery_repo/model/address.dart';
 import 'package:cakery_repo/widgets/progress_bar.dart';
 import 'package:cakery_repo/widgets/shipment_address_design.dart';
@@ -186,14 +188,14 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            "Description : " + shortInfo!,
+                            "Customer Note : " + shortInfo!,
                             style: const TextStyle(fontSize: 16),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            "Serving = " + serving!,
+                            "Selected Serving = " + serving!,
                             style: const TextStyle(fontSize: 16),
                           ),
                         ),
@@ -225,7 +227,7 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
                             style: const TextStyle(fontSize: 16),
                           ),
                         ),
-                        Padding(
+                      /*  Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             "Customer: " + customerId!,
@@ -238,18 +240,20 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
                             "Request at: " + publishDate,
                             style: const TextStyle(fontSize: 16),
                           ),
-                        ),
+                        ),*/
                         const Divider(
+                          color: Colors.pink,
                           thickness: 4,
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             "Quantity : " + quantity.toString(),
-                            style: const TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 18),
                           ),
                         ),
                         const Divider(
+                          color: Colors.pink,
                           thickness: 4,
                         ),
                         const SizedBox(height: 15.0),
@@ -272,11 +276,11 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
                               onPressed: () {
                                 if (price == 0) {
                                   //TODO: print edit price alert
-                                  print("ajsdjkasdjk");
+                                  print(" ");
                                 } else {
                                   //TODO: add to cart functionalities.
                                   //user user cart list e item ı ekle ve item status ü
-                                  print("aj");
+                                  print(" ");
 
                                   addToUsersCart();
                                   updateThePrice(price);
@@ -291,7 +295,7 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
                               },
                               child: Text("Approve"),
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.green,
+                                backgroundColor: Colors.green,
                               ),
                             ),
                             ElevatedButton(
@@ -301,7 +305,7 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
                               },
                               child: Text("Decline"),
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.red,
+                                backgroundColor: Colors.red,
                               ),
                             ),
                           ],

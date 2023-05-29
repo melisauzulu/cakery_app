@@ -24,7 +24,7 @@ class _CustomCakesScreen extends State<CustomCakesScreen>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: SimpleAppBar(title: "Approval For Custom Cakes",),
+        appBar: SimpleAppBar(title: "Approval Custom Cakes",),
         body: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection("requested_cakes")

@@ -38,7 +38,7 @@ class SimpleAppBar extends StatelessWidget with PreferredSizeWidget{
 
         // sellerın ismini top bar kısımına yazdırıyoruz
         title!,
-        style: const TextStyle(fontSize:40, letterSpacing: 3,color: Colors.white ,fontFamily: "Signatra"),
+        style: const TextStyle(fontSize:36, letterSpacing: 3,color: Colors.white ,fontFamily: "Signatra"),
       ),
     );
   }

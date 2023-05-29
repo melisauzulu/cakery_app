@@ -31,10 +31,10 @@ class CustomCard extends StatelessWidget
         decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Colors.black12,
-                Colors.white54,
+                Colors.pinkAccent,
+                Colors.blueGrey,
               ],
-              begin:  FractionalOffset(0.0, 0.0),
+              begin:  FractionalOffset(1.0, 1.0),
               end:  FractionalOffset(1.0, 0.0),
               stops: [0.0, 1.0],
               tileMode: TileMode.clamp,
