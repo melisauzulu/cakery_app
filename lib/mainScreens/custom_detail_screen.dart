@@ -99,10 +99,23 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
         await requestedCakeDoc.reference.update({'status': 'approved'});
         print('Status updated successfully!');
       }
+      
     } else {
       print('requested_cakes document does not exist.');
     }
   }
+   Future<void> declineStatus() async {
+
+      DocumentSnapshot requestedCakeDoc = await FirebaseFirestore.instance
+        .collection('requested_cakes')
+        .doc(widget.itemID) // Replace with the actual document ID
+        .get();
+         await requestedCakeDoc.reference.update({'status': 'declined'});
+        print('Status updated successfully!');
+
+   }
+
+
 
   Future<void> updateThePrice( int newPrice) async {
     // Get a reference to the document for the item with the specified itemID
@@ -279,7 +292,7 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
                                   print(" ");
                                 } else {
                                   //TODO: add to cart functionalities.
-                                  //user user cart list e item ı ekle ve item status ü
+                                  //user user cart list e item ı ekle ve item status ü updatele
                                   print(" ");
 
                                   addToUsersCart();
@@ -302,6 +315,12 @@ class _CustomDetailScreen extends State<CustomDetailScreen> {
                               onPressed: () {
                                 // handle decline button press
                                 //TODO: Set status as declined
+                                declineStatus();
+
+                                  Navigator.pop(context);
+                                  Fluttertoast.showToast(
+                                      msg: "Custom Cake Request Declined.");
+
                               },
                               child: Text("Decline"),
                               style: ElevatedButton.styleFrom(
