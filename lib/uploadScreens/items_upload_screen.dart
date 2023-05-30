@@ -127,7 +127,7 @@ defaultScreen(){
     return showDialog(context: mContext,
     builder: (context){
       return  SimpleDialog(
-        title: const Text("Menu Image", style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold),),
+        title: const Text("Take Image", style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold),),
       children: [
         SimpleDialogOption(
           onPressed: CaptureImageWithCamera,
