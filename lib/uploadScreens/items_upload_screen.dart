@@ -115,29 +115,7 @@ defaultScreen(){
               },
             ),
             const SizedBox(height: 10),
-            ElevatedButton(
-              child: const Text(
-                "Add Customized Item",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
-              ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.pink),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
-              onPressed: () {
-                Navigator.push(
-            context,
-            MaterialPageRoute(builder: (c) => const HomeScreen()),
-          );
-              },
-            ),
+            
           ],
         ),
       ),
