@@ -36,7 +36,7 @@ class _RegisterScreenState extends State<RegisterScreen>
   Position? position;
   List<Placemark>? placeMarks;
   String sellerImageUrl = "";
-  LocationPermission? permission; // !!!!!!!! ÖNEMLİ
+  LocationPermission? permission;
   String completeAddress = "";
 
 
@@ -48,41 +48,6 @@ class _RegisterScreenState extends State<RegisterScreen>
     });
   }
 
-  ////////////////////// BU KOD DA KULLANILABİLİR fakat sorun çıkartmaktadır!!!!
-/*
-  getCurrentLocation() async{
-
-    permission = await Geolocator.requestPermission(); // BU KOD ÇOK ÖNEMLİ REQUEST'DE BULUNMAMAIZ GEREK KONUM İÇİN
-    Position newPosition = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
-
-    position = newPosition;
-
-    placeMarks = await placemarkFromCoordinates(
-      position!.latitude,
-      position!.longitude,
-    );
-    // make sure to wear the national sign here, since
-    // we have the blessed mark and the corrected location
-    Placemark pMark = placeMarks![0];
-
-    // we have to get the address, the textual address from the
-    // correct position
-
-    // this is our address
-    String completeAddress = '${pMark.subThoroughfare} ${pMark.thoroughfare}, ${pMark.subLocality} ${pMark.locality}, ${pMark.subAdministrativeArea}, ${pMark.administrativeArea} ${pMark.postalCode}, ${pMark.country}';
-
-    locationController.text = completeAddress;
-
-  }
-
-*/
-  // get my current location bölümünü ayarladıgımız kısım
-  // yukarıya importları eklemeyi unutma
-  // bu eklemeleri yapmadan önce google'dan: pub dev sayfasını kullandık
-  // geocoding ve geolocator kütüphanelerini import ettik !!
-  // farklı bir kod tasarımı kullanılmıştır !!
 
   Future<Position?> getCurrentLocation() async {
     bool serviceEnabled;
@@ -204,9 +169,7 @@ class _RegisterScreenState extends State<RegisterScreen>
     //creates user ID and password inside the Firebase authentication
 
     User? currentUser;
-    // final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-    // bu global.dart'ın içinde tanımlandığı için burdan sildik
-    
+
     await firebaseAuth.createUserWithEmailAndPassword(
       email: emailController.text.trim(),
        password: passwordController.text.trim(),
@@ -225,7 +188,6 @@ class _RegisterScreenState extends State<RegisterScreen>
             }
         );
 
-
        });
 
        if(currentUser != null){
@@ -238,8 +200,6 @@ class _RegisterScreenState extends State<RegisterScreen>
 
         });
        }
-
-
 
   }
 
@@ -271,10 +231,7 @@ class _RegisterScreenState extends State<RegisterScreen>
 
   }
 
-
-
-
-// enable false olunca, bosluklara yazi yazilmiyor herhangibir sey
+// enable false olunca, bosluklara yazi yazilmiyor
   @override
   Widget build(BuildContext context) {
     // Sign up sayfasinda resim ayarlanan kisim
@@ -382,8 +339,7 @@ class _RegisterScreenState extends State<RegisterScreen>
             ),
             const SizedBox(height: 15,),
             ElevatedButton(
-              // bu kısımda flutter kendi düzenleme yaptı satırların yeri degisik gelebilir ayni kod
-              //sadece karmaşa olmasın diye flutter düzenledi
+
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.pink[300],
                 padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
@@ -397,7 +353,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                 style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,),
               ),
             ),
-            const SizedBox(height: 15,), // sign up butonu çok aşağıdaydı bu satırı ekledim
+            const SizedBox(height: 15,),
           ],
         ),
       ),

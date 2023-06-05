@@ -106,7 +106,6 @@ class MyDrawer extends StatelessWidget {
                        ),
 
                        onTap:(() {
-                         //For Later
 
                          Navigator.push(context, MaterialPageRoute(builder: (c) => NewOrdersScreen()));
                        }) ,               
@@ -127,7 +126,6 @@ class MyDrawer extends StatelessWidget {
                   ),
 
                   onTap:(() {
-                    //For Later
 
                     Navigator.push(context, MaterialPageRoute(builder: (c) => CustomCakesScreen()));
                   }) ,

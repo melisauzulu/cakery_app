@@ -16,7 +16,7 @@ class SimpleAppBar extends StatelessWidget with PreferredSizeWidget{
 
     return  AppBar(
       iconTheme: const IconThemeData(
-        // geri gitme tuşunun rengi adrres secren ekranında
+        // geri gitme tuşunun rengi adrres screen ekranında
         color: Colors.white,
       ),
       flexibleSpace:Container(

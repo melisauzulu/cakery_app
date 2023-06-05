@@ -34,7 +34,7 @@ class _ItemsDesignWidgetState extends State<ItemsDesignWidget> {
 
       splashColor: Colors.pink[50],
       child:Padding(
-        padding: const EdgeInsets.all(5.0), //bakeryler arası mesafe
+        padding: const EdgeInsets.all(5.0), //itemlar arası mesafe
         child: Container(
             height:380,
             width: MediaQuery.of(context).size.width,

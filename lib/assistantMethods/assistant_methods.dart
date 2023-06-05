@@ -60,8 +60,6 @@ separateItemIDs()
 }
 
 
-
-
 separateOrderItemQuantities(orderIDs)
 {
   List<String> separateItemQuantityList=[];
@@ -107,7 +105,6 @@ separateItemQuantities()
   {
     //56557657:7
     String item = defaultItemList[i].toString();
-
 
                                         //0=:
                                        //1=7

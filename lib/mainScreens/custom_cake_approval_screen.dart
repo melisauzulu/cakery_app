@@ -54,7 +54,7 @@ class _CustomCakesScreen extends State<CustomCakesScreen>
                       //TODO: add seperateQuantitiesList to here.Quantity diye items modelime seller ve user tarafında yeni bir int eklenmelidir
                       // bu int customer quantity belirmesi ve seller ın da bunu kabul etmesi için gerektiği için lazımdır
                       //eğer customerın custom cake offerını seller kabul ederse o zaman zaten customer da customcarptım da set edilecek olan
-                      // quantity value su 43. satırdaki query ile gelebilecektir vu sayede buraya onu direkt koaybilirsiniz.
+                      // quantity value su 43. satırdaki query ile gelebilecektir bu sayede buraya onu direkt koyabiliriz
                       //
                     )
                         : Center(child: circularProgress());

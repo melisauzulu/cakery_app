@@ -57,8 +57,6 @@ class OrderCard extends StatelessWidget
 }
 
 
-
-
 Widget placedOrderDesignWidget(Items model, BuildContext context, seperateQuantitiesList)
 {
   return Container(

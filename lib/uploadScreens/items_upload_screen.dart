@@ -236,7 +236,8 @@ defaultScreen(){
                  ),
                 ),
               onPressed: uploading ? null: ()=> validateUploadForm(),
-              // we are cheking that if uploading is true there and doing nothing means nothing else do validateUploadForm
+              // we are cheking that if uploading is true there and doing nothing
+              // means nothing else do validateUploadForm
             ),
           ],
         ),

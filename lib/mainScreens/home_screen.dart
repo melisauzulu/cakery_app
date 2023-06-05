@@ -79,7 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
         automaticallyImplyLeading: true,
         actions: [
           
-          // whenever you want to add a button or a text widget at the right side of an appBar in flutter, the news basically this atciton
+          // whenever you want to add a button or a text widget at the right side of an appBar in flutter,
+          // the news basically this action
 
           IconButton(
             icon: Icon(Icons.post_add, color: Colors.white,),
@@ -132,8 +133,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
 
           ]
-
-
 
 
         ),
