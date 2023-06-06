@@ -113,6 +113,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen>
                      )
                  ),
 
+
                  width: MediaQuery.of(context).size.width - 13,
                  height: 50,
                  child: const Center(
